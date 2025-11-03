@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://lj3mjwoyq6p"]
+
+[ext_resource type="Script" uid="uid://crg1xe8rxy8mb" path="res://scripts/systems/optionsscene.gd" id="1_0gdfa"]
+[ext_resource type="Texture2D" uid="uid://c5mh345ocg7xj" path="res://assets/environment/backgroundanimatedparallax - OPTIONS.png" id="2_8g6au"]
+[ext_resource type="FontFile" uid="uid://b2sgytwukhekn" path="res://assets/ui/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Aseprite/7pxMONOkeychainn.ttf" id="3_8lhtk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne3eq"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Optionsscene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0gdfa")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_direction = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -436.0
+offset_top = -180.0
+offset_right = 396.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_8g6au")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.019965278
+anchor_top = 0.030864198
+anchor_right = 0.1484375
+anchor_bottom = 0.28703704
+metadata/_edit_use_anchors_ = true
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_8lhtk")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxFlat_ne3eq")
+text = "BACK"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -273.0
+offset_right = 327.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="BrightnessSlider" type="HSlider" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="UpControlButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="DownControlButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="LeftControlButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="RightControlButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="InteractButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="InventoryButton" type="Button" parent="VBoxContainer2"]
+layout_mode = 2

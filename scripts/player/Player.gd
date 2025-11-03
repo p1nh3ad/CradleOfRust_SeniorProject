@@ -23,6 +23,7 @@ func _ready():
 
 func _physics_process(delta):
 	_handle_movement(delta)
+	_handle_sprinting(delta) #change
 	_check_interaction_input()
 
 func _handle_movement(delta):
@@ -31,15 +32,15 @@ func _handle_movement(delta):
 	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	input_vector = input_vector.normalized()
 
-	is_sprinting = Input.is_action_pressed("dash") and stats.stamina > 0
+	# is_sprinting = Input.is_action_pressed("dash") and stats.stamina > 0
 	var current_speed = speed * (sprint_multiplier if is_sprinting else 1.0)
 	velocity = input_vector * current_speed
 	move_and_slide()
 
-	if is_sprinting:
-		stats.use_stamina(delta * 10)
-	else:
-		stats.recover_stamina(delta * 5)
+	#if is_sprinting:
+	#	stats.use_stamina(delta * 10)
+	#else:
+	#	stats.recover_stamina(delta * 5)
 
 	_update_animation(input_vector)
 
@@ -113,3 +114,18 @@ func _check_interaction_input():
 		# Call a generic interaction function if it exists
 		if current_interactable.has_method("on_player_interact"):
 			current_interactable.on_player_interact()
+
+## ary you work on these two
+func _handle_sprinting(delta):
+	if Input.is_action_pressed("dash") and stats.stamina > 0.9:
+		is_sprinting = true
+		#print(delta)
+		#print(delta*1000)
+		print(stats.stamina)
+		stats.use_stamina(delta*50)
+	else: 
+		is_sprinting = false
+		stats.recover_stamina(delta*5)
+	
+func _pause_screen():
+	pass
