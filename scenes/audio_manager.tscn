@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdrenjqyna048"]
+
+[ext_resource type="Script" uid="uid://sfm58txlum0s" path="res://scenes/audio_manager.gd" id="1_3asnw"]
+[ext_resource type="AudioStream" uid="uid://blgt6lhnplqmp" path="res://assets/ui/Pixel_32.wav" id="1_liach"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_3asnw")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_liach")
+bus = &"Sound"

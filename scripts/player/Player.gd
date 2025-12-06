@@ -2,13 +2,24 @@ extends CharacterBody2D
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var stats = preload("res://scripts/player/PlayerStats.gd").new()
+@onready var playerupgrade = $"../CanvasLayer/PlayerUpgrade" 
 
 var gender: String = "male"
 var direction: String = "down"
 var state: String = "idle"
+
+#sprint variables
 var speed := 150.0
 var sprint_multiplier := 1.8
 var is_sprinting := false
+#signal stamina_changed(current, max)
+var available_sprint
+
+# movement variables <-- if i implement control binding
+var up = Input.get_action_strength("ui_up")
+var down = Input.get_action_strength("ui_down")
+var left = Input.get_action_strength("ui_left")
+var right = Input.get_action_strength("ui_right")
 
 # Interaction
 var nearby_interactables := []   # list of Area2D nodes in range
@@ -16,18 +27,24 @@ var current_interactable: Node = null
 @onready var interact_hint: Label = $InteractHint # optional "Press E" label
 
 func _ready():
+	playerupgrade.visible = false
+	add_to_group("Player")
 	_load_player_prefs()
 	_setup_animations()
 	if interact_hint:
 		interact_hint.visible = false
+	#_open_player_upgrade()
+	
 
 func _physics_process(delta):
 	_handle_movement(delta)
 	_handle_sprinting(delta) #change
 	_check_interaction_input()
 
+
 func _handle_movement(delta):
 	var input_vector = Vector2.ZERO
+	
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	input_vector = input_vector.normalized()
@@ -119,13 +136,37 @@ func _check_interaction_input():
 func _handle_sprinting(delta):
 	if Input.is_action_pressed("dash") and stats.stamina > 0.9:
 		is_sprinting = true
-		#print(delta)
-		#print(delta*1000)
-		print(stats.stamina)
 		stats.use_stamina(delta*50)
+		#emit_signal("stamina_changed", stats.stamina, stats.max_stamina)
 	else: 
 		is_sprinting = false
-		stats.recover_stamina(delta*5)
+		stats.recover_stamina(delta*stats.rec_stamina)
+		#emit_signal("stamina_changed", stats.stamina, stats.max_stamina)
 	
-func _pause_screen():
+func increase_max_health(amount):
+	stats.max_health += amount
+	stats.health = stats.max_health
+
+func increase_max_stamina(amount):
+	print(stats.max_stamina)
+	stats.max_stamina += amount
+
+func increase_stamina_recovery(amount):
+	stats.rec_stamina += amount
 	pass
+
+# for testing
+func _input(event):
+	if Input.is_action_just_pressed("ui_t"):
+		print("pressed?")
+		_toggle_player_upgrade()
+
+
+func _toggle_player_upgrade():
+	if playerupgrade.visible:
+		print("hide")
+		playerupgrade.hide()
+		playerupgrade.get_node("CanvasLayer").visible = false
+	else:
+		playerupgrade.get_node("CanvasLayer").visible = true
+		playerupgrade.show()

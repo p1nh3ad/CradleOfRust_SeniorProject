@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://lj3mjwoyq6p"]
+[gd_scene load_steps=6 format=3 uid="uid://lj3mjwoyq6p"]
 
 [ext_resource type="Script" uid="uid://crg1xe8rxy8mb" path="res://scripts/systems/optionsscene.gd" id="1_0gdfa"]
 [ext_resource type="Texture2D" uid="uid://c5mh345ocg7xj" path="res://assets/environment/backgroundanimatedparallax - OPTIONS.png" id="2_8g6au"]
@@ -6,6 +6,8 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne3eq"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_0gdfa"]
 
 [node name="Optionsscene" type="Control"]
 layout_mode = 3
@@ -51,18 +53,20 @@ text = "BACK"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
+anchors_preset = -1
+anchor_left = 0.3515625
+anchor_right = 0.6875
 anchor_bottom = 1.0
-offset_left = -273.0
-offset_right = 327.0
+offset_left = -4.0
+offset_right = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="VolumeSlider" type="HSlider" parent="VBoxContainer2"]
 layout_mode = 2
+max_value = 1.0
+step = 0.001
 
 [node name="BrightnessSlider" type="HSlider" parent="VBoxContainer2"]
 layout_mode = 2
@@ -84,3 +88,9 @@ layout_mode = 2
 
 [node name="InventoryButton" type="Button" parent="VBoxContainer2"]
 layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="VBoxContainer2"]
+stream = SubResource("AudioStreamMP3_0gdfa")
+bus = &"Sound"
+
+[connection signal="value_changed" from="VBoxContainer2/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
