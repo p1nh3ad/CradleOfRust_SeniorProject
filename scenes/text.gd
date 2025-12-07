@@ -1,20 +1,25 @@
 extends Label
 
-const CHAR_READ_RATE := 0.05  # seconds per character
+@onready var speaker_label = $"../../../../../SpeakerLabel"
 
+const CHAR_READ_RATE := 0.05  # seconds per character
 signal dialogue_empty
 
 var full_text := ""
+var current_speaker := ""
 var typing := false
 var typing_finished = false
 
 var text_queue := []
+var speaker_queue := []
 
 # Call this to add lines to the queue
-func queue_text(new_text: String) -> void:
+func queue_text(new_text: String, new_speaker: String) -> void:
 	text_queue.append(new_text)
+	speaker_queue.append(new_speaker)
 	typing_finished = false
 	if not typing:
+		print("PROCESSINGNGNGNG")
 		_process_queue()
 
 
@@ -22,11 +27,24 @@ func queue_text(new_text: String) -> void:
 # Internal function to process the queue
 func _process_queue() -> void:
 	if text_queue.is_empty():
+		print("empty aurgh?")
 		return
 	
 	typing = true
 	full_text = text_queue.pop_front()
+	current_speaker = speaker_queue.pop_front()
 	text = ""
+	
+	var hold = full_text
+	full_text = current_speaker
+	current_speaker = hold
+	
+	#print("speaker")
+	#print(current_speaker)
+	#print("text")
+	#print(full_text)
+	
+	speaker_label.text = current_speaker
 	
 	await get_tree().create_timer(0.2).timeout
 	# typewriter style

@@ -30,6 +30,9 @@ func lose_health(amount: float):
 func add_scrap(amount: int):
 	scrap += amount
 
+func spend_scrap(amount: int):
+	scrap -= amount
+
 func apply_upgrade(upgrade_type: String, value: float):
 	if upgrades.has(upgrade_type):
 		upgrades[upgrade_type] += value

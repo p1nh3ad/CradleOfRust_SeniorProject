@@ -27,7 +27,7 @@ var current_interactable: Node = null
 @onready var interact_hint: Label = $InteractHint # optional "Press E" label
 
 func _ready():
-	playerupgrade.visible = false
+	playerupgrade.get_node("CanvasLayer").visible = false
 	add_to_group("Player")
 	_load_player_prefs()
 	_setup_animations()
